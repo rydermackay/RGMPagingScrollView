@@ -46,7 +46,8 @@ typedef enum {
 @property (nonatomic) NSInteger currentPage;
 - (void)setCurrentPage:(NSInteger)currentPage animated:(BOOL)animated;
 
-- (UIView *)dequeueReusablePageWithIdentifer:(NSString *)identifier;
+- (UIView *)dequeueReusablePageWithIdentifer:(NSString *)identifier forIndex:(NSInteger)idx;
+- (void)registerClass:(Class)pageClass forCellReuseIdentifier:(NSString *)identifier;
 - (void)registerNib:(UINib *)nib forCellReuseIdentifier:(NSString *)identifier;
 
 - (void)reloadData;
@@ -57,18 +58,9 @@ typedef enum {
 
 #pragma mark - UIView+RGMReusablePage
 
-@protocol RGMReusablePage <NSObject>
+@interface UIView (RGMReusablePage)
 
-@optional
-- (void)prepareForReuse;
-
-@end
-
-
-
-@interface UIView (RGMReusablePage) <RGMReusablePage>
-
-@property (copy, nonatomic) NSString *pageReuseIdentifier;
+@property (copy, nonatomic, readonly) NSString *pageReuseIdentifier;
 - (void)prepareForReuse;
 
 @end

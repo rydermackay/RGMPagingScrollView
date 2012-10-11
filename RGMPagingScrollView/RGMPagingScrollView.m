@@ -13,7 +13,7 @@
 
 @implementation UIView (RGMReusablePage)
 
-static char RGMPageReuseIdentifierKey;
+static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
 
 - (NSString *)pageReuseIdentifier
 {
@@ -22,15 +22,7 @@ static char RGMPageReuseIdentifierKey;
 
 - (void)setPageReuseIdentifier:(NSString *)pageReuseIdentifier
 {
-    if ([pageReuseIdentifier isEqualToString:self.pageReuseIdentifier]) {
-        return;
-    }
-    
-    static NSString *identifierKey = @"identifier";
-    
-    [self willChangeValueForKey:identifierKey];
-    objc_setAssociatedObject(self, &RGMPageReuseIdentifierKey, pageReuseIdentifier, OBJC_ASSOCIATION_COPY);
-    [self didChangeValueForKey:identifierKey];
+    objc_setAssociatedObject(self, &RGMPageReuseIdentifierKey, pageReuseIdentifier, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (void)prepareForReuse
@@ -152,10 +144,10 @@ static char RGMPageReuseIdentifierKey;
 
 #pragma mark - RGMPagingScrollView
 
-@interface RGMPagingScrollView ()
-{
+@interface RGMPagingScrollView () {
     NSMutableSet *_visiblePages;
     NSMutableDictionary *_reusablePages;
+    NSMutableDictionary *_registeredClasses;
     NSMutableDictionary *_registeredNibs;
 }
 
@@ -164,8 +156,6 @@ static char RGMPageReuseIdentifierKey;
 
 - (CGRect)frameForIndex:(NSInteger)idx;
 - (BOOL)isDisplayingPageAtIndex:(NSInteger)idx;
-- (void)configurePage:(UIView *)page forIndex:(NSInteger)idx;
-- (UIView *)dequeueReusablePageWithIdentifer:(NSString *)identifier;
 - (void)queuePageForReuse:(UIView *)page;
 - (void)didScrollToPage:(NSInteger)idx;
 
@@ -201,6 +191,7 @@ static char RGMPageReuseIdentifierKey;
     _scrollDirection = RGMScrollDirectionHorizontal;
     _visiblePages = [NSMutableSet set];
     _reusablePages = [NSMutableDictionary dictionary];
+    _registeredClasses = [NSMutableDictionary dictionary];
     _registeredNibs = [NSMutableDictionary dictionary];
 }
 
@@ -285,16 +276,26 @@ static char RGMPageReuseIdentifierKey;
 
 - (CGRect)frameForIndex:(NSInteger)idx
 {
+    RGMPagingScrollViewModel *model = self.viewModel;
+    
+    CGFloat pageWidth = model.pageWidth;
+    CGFloat pageHeight = model.pageHeight;
+    CGFloat gutter = model.gutter;
+    
+    CGRect frame = CGRectZero;
+    frame.size.width = pageWidth;
+    frame.size.height = pageHeight;
+    
     switch (self.scrollDirection) {
         case RGMScrollDirectionHorizontal:
-            return CGRectMake((self.viewModel.pageWidth + self.viewModel.gutter) * idx + floorf(self.viewModel.gutter / 2.0f), 0.0f, self.viewModel.pageWidth, self.viewModel.pageHeight);
+            frame.origin.x = (pageWidth + gutter) * idx + floorf(gutter / 2.0f);
             break;
         case RGMScrollDirectionVertical:
-            return CGRectMake(0.0f, (self.viewModel.pageHeight + self.viewModel.gutter) * idx + floorf(self.viewModel.gutter / 2.0f), self.viewModel.pageWidth, self.viewModel.pageHeight);
-            break;
-        default:
+            frame.origin.y = (pageHeight + gutter) * idx + floorf(gutter / 2.0f);
             break;
     }
+    
+    return frame;
 }
 
 - (BOOL)isDisplayingPageAtIndex:(NSInteger)idx
@@ -311,33 +312,44 @@ static char RGMPageReuseIdentifierKey;
     return isDisplayingPage;
 }
 
-- (void)configurePage:(UIView *)page forIndex:(NSInteger)idx
+- (void)registerClass:(Class)pageClass forCellReuseIdentifier:(NSString *)identifier
 {
-    page.frame = [self frameForIndex:idx];
-    page.tag = idx;
+    NSParameterAssert(identifier != nil);
     
-    if (page.pageReuseIdentifier) {
-        if ([_reusablePages.allKeys containsObject:page.pageReuseIdentifier] == NO) {
-            NSMutableSet *set = [NSMutableSet set];
-            [_reusablePages setObject:set forKey:page.pageReuseIdentifier];
-        }
-    }
+    [_registeredClasses setValue:pageClass forKey:identifier];
+    [_registeredNibs removeObjectForKey:identifier];
 }
 
 - (void)registerNib:(UINib *)nib forCellReuseIdentifier:(NSString *)identifier
 {
-    NSParameterAssert(nib != nil);
-    NSParameterAssert(identifier.length > 0);
+    NSParameterAssert(identifier != nil);
     
-    [_registeredNibs setObject:nib forKey:identifier];
+    [_registeredNibs setValue:nib forKey:identifier];
+    [_registeredClasses removeObjectForKey:identifier];
 }
 
-- (UIView *)dequeueReusablePageWithIdentifer:(NSString *)identifier
+- (UIView *)dequeueReusablePageWithIdentifer:(NSString *)identifier forIndex:(NSInteger)idx
 {
-    NSMutableSet *set = [_reusablePages objectForKey:identifier];
+    NSParameterAssert(identifier != nil);
+    
+    NSMutableSet *set = [self reusablePagesWithIdentifier:identifier];
     UIView *page = [set anyObject];
     
+    if (page != nil) {
+        [page prepareForReuse];
+        [set removeObject:page];
+        
+        return page;
+    }
+    
+    NSAssert([_registeredClasses.allKeys containsObject:identifier] || [_registeredNibs.allKeys containsObject:identifier], @"No registered class or nib for identifier \"%@\"", identifier);
+    
+    // instantiate page from registered class
+    Class pageClass = [_registeredClasses objectForKey:identifier];
+    page = [[pageClass alloc] initWithFrame:CGRectZero];
+    
     if (page == nil) {
+        // otherwise, instantiate from registered nib
         UINib *registeredNib = [_registeredNibs objectForKey:identifier];
         
         NSArray *topLevelObjects = [registeredNib instantiateWithOwner:self options:nil];
@@ -345,22 +357,35 @@ static char RGMPageReuseIdentifierKey;
         
         page = [topLevelObjects objectAtIndex:0];
         NSParameterAssert([page isKindOfClass:[UIView class]]);
-        
-        page.pageReuseIdentifier = identifier;
     }
-    else {
-        [set removeObject:page];
-    }
+    
+    page.pageReuseIdentifier = identifier;
     
     return page;
 }
 
+- (NSMutableSet *)reusablePagesWithIdentifier:(NSString *)identifier
+{
+    if (identifier == nil) {
+        return nil;
+    }
+    
+    NSMutableSet *set = [_reusablePages objectForKey:identifier];
+    if (set == nil) {
+        set = [NSMutableSet set];
+        [_reusablePages setObject:set forKey:identifier];
+    }
+    
+    return set;
+}
+
 - (void)queuePageForReuse:(UIView *)page
 {
-    if (page.pageReuseIdentifier.length > 0) {
-        NSMutableSet *set = [_reusablePages objectForKey:page.pageReuseIdentifier];
-        [set addObject:page];
+    if (page.pageReuseIdentifier == nil) {
+        return;
     }
+    
+    [[self reusablePagesWithIdentifier:page.pageReuseIdentifier] addObject:page];
 }
 
 - (void)layoutSubviews
@@ -420,7 +445,9 @@ static char RGMPageReuseIdentifierKey;
                 UIView *page = [self.datasource pagingScrollView:self viewForIndex:idx];
                 NSParameterAssert(page != nil);
                 
-                [self configurePage:page forIndex:idx];
+                page.frame = [self frameForIndex:idx];
+                page.tag = idx;
+                
                 [self insertSubview:page atIndex:0];
                 [_visiblePages addObject:page];
             }
