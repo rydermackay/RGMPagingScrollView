@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    RGMScrollDirectionVertical,
-    RGMScrollDirectionHorizontal
+    RGMScrollDirectionHorizontal,
+    RGMScrollDirectionVertical
 } RGMScrollDirection;
 
 @class RGMPagingScrollView;
@@ -28,8 +28,8 @@ typedef enum {
 
 @protocol RGMPagingScrollViewDatasource <NSObject>
 @required
-- (NSUInteger)pagingScrollViewNumberOfPages:(RGMPagingScrollView *)pagingScrollView;
-- (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSUInteger)idx;
+- (NSInteger)pagingScrollViewNumberOfPages:(RGMPagingScrollView *)pagingScrollView;
+- (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSInteger)idx;
 @end
 
 

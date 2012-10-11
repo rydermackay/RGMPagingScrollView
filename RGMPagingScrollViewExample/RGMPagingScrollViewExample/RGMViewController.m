@@ -15,8 +15,8 @@
 
 #pragma mark - RGMPagingScrollViewDatasource
 
-- (NSUInteger)pagingScrollViewNumberOfPages:(RGMPagingScrollView *)pagingScrollView;
-- (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSUInteger)idx;
+- (NSInteger)pagingScrollViewNumberOfPages:(RGMPagingScrollView *)pagingScrollView;
+- (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSInteger)idx;
 
 #pragma mark - RGMPagingScrollViewDelegate
 
@@ -29,7 +29,7 @@
 #pragma mark -
 
 static NSString *reuseIdentifier = @"RGMPageReuseIdentifier";
-static NSUInteger numberOfPages = 8;
+static NSInteger numberOfPages = 8;
 
 @implementation RGMViewController
 
@@ -100,12 +100,12 @@ static NSUInteger numberOfPages = 8;
 
 #pragma mark - RGMPagingScrollViewDatasource
 
-- (NSUInteger)pagingScrollViewNumberOfPages:(RGMPagingScrollView *)pagingScrollView
+- (NSInteger)pagingScrollViewNumberOfPages:(RGMPagingScrollView *)pagingScrollView
 {
     return numberOfPages;
 }
 
-- (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSUInteger)idx
+- (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSInteger)idx
 {
     RGMPageView *view = (RGMPageView *)[pagingScrollView dequeueReusablePageWithIdentifer:reuseIdentifier forIndex:idx];
     
