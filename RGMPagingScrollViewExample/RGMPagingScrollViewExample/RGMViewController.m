@@ -8,7 +8,7 @@
 
 #import "RGMViewController.h"
 #import "RGMPagingScrollView.h"
-#import "RGMPageIndicator.h"
+#import "RGMPageControl.h"
 
 @interface RGMViewController () <RGMPagingScrollViewDatasource, RGMPagingScrollViewDelegate>
 
@@ -27,7 +27,7 @@
 
 #pragma mark -
 
-static NSString *reuseIdentifier = @"identifier";
+static NSString *reuseIdentifier = @"RGMPageReuseIdentifier";
 static NSUInteger numberOfPages = 3;
 
 @implementation RGMViewController
@@ -38,13 +38,12 @@ static NSUInteger numberOfPages = 3;
 {
     [super viewDidLoad];
     
-    UINib *nib = [UINib nibWithNibName:@"RGMView" bundle:nil];
-    [self.pagingScrollView registerNib:nib forCellReuseIdentifier:reuseIdentifier];
+    [self.pagingScrollView registerClass:[UIView class] forCellReuseIdentifier:reuseIdentifier];
     
     UIImage *image = [UIImage imageNamed:@"indicator.png"];
     UIImage *imageActive = [UIImage imageNamed:@"indicator-active.png"];
     
-    RGMPageIndicator *indicator = [[RGMPageIndicator alloc] initWithItemImage:image activeImage:imageActive];
+    RGMPageControl *indicator = [[RGMPageControl alloc] initWithItemImage:image activeImage:imageActive];
     indicator.numberOfPages = numberOfPages;
     [self.view addSubview:indicator];
     self.pageIndicator = indicator;
@@ -52,7 +51,7 @@ static NSUInteger numberOfPages = 3;
     [indicator addTarget:self action:@selector(pageIndicatorValueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (IBAction)pageIndicatorValueChanged:(RGMPageIndicator *)sender
+- (IBAction)pageIndicatorValueChanged:(RGMPageControl *)sender
 {
     [self.pagingScrollView setCurrentPage:sender.currentPage animated:YES];
 }
@@ -88,7 +87,7 @@ static NSUInteger numberOfPages = 3;
 
 - (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSUInteger)idx
 {
-    UIView *view = [pagingScrollView dequeueReusablePageWithIdentifer:reuseIdentifier];
+    UIView *view = [pagingScrollView dequeueReusablePageWithIdentifer:reuseIdentifier forIndex:idx];
     
     switch (idx) {
         case 0:

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D11F5351627333800E0E869 /* RGMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D11F5341627333800E0E869 /* RGMPageControl.m */; };
 		0D1B9E3616252156007672AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1B9E3516252156007672AD /* UIKit.framework */; };
 		0D1B9E3816252156007672AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1B9E3716252156007672AD /* Foundation.framework */; };
 		0D1B9E3A16252156007672AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1B9E3916252156007672AD /* CoreGraphics.framework */; };
@@ -16,11 +17,9 @@
 		0D1B9E4816252156007672AD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E4716252156007672AD /* Default.png */; };
 		0D1B9E4A16252156007672AD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E4916252156007672AD /* Default@2x.png */; };
 		0D1B9E4C16252156007672AD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E4B16252156007672AD /* Default-568h@2x.png */; };
-		0D1B9E5716252166007672AD /* RGMPageIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B9E5416252166007672AD /* RGMPageIndicator.m */; };
 		0D1B9E5816252166007672AD /* RGMPagingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B9E5616252166007672AD /* RGMPagingScrollView.m */; };
 		0D1B9E5A162522FC007672AD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E59162522FC007672AD /* MainStoryboard.storyboard */; };
 		0D1B9E5D16252308007672AD /* RGMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D1B9E5C16252308007672AD /* RGMViewController.m */; };
-		0D1B9E5F1625294D007672AD /* RGMView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E5E1625294C007672AD /* RGMView.xib */; };
 		0D1B9E6416252F65007672AD /* indicator-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E6016252F65007672AD /* indicator-active.png */; };
 		0D1B9E6516252F65007672AD /* indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E6116252F65007672AD /* indicator.png */; };
 		0D1B9E6616252F65007672AD /* indicator-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D1B9E6216252F65007672AD /* indicator-active@2x.png */; };
@@ -28,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D11F5341627333800E0E869 /* RGMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGMPageControl.m; sourceTree = "<group>"; };
 		0D1B9E3116252156007672AD /* RGMPagingScrollViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RGMPagingScrollViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D1B9E3516252156007672AD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D1B9E3716252156007672AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -41,14 +41,12 @@
 		0D1B9E4716252156007672AD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		0D1B9E4916252156007672AD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		0D1B9E4B16252156007672AD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		0D1B9E5316252166007672AD /* RGMPageIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGMPageIndicator.h; sourceTree = "<group>"; };
-		0D1B9E5416252166007672AD /* RGMPageIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGMPageIndicator.m; sourceTree = "<group>"; };
+		0D1B9E5316252166007672AD /* RGMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGMPageControl.h; sourceTree = "<group>"; };
 		0D1B9E5516252166007672AD /* RGMPagingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGMPagingScrollView.h; sourceTree = "<group>"; };
 		0D1B9E5616252166007672AD /* RGMPagingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGMPagingScrollView.m; sourceTree = "<group>"; };
 		0D1B9E59162522FC007672AD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		0D1B9E5B16252308007672AD /* RGMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGMViewController.h; sourceTree = "<group>"; };
 		0D1B9E5C16252308007672AD /* RGMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGMViewController.m; sourceTree = "<group>"; };
-		0D1B9E5E1625294C007672AD /* RGMView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RGMView.xib; sourceTree = "<group>"; };
 		0D1B9E6016252F65007672AD /* indicator-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "indicator-active.png"; sourceTree = "<group>"; };
 		0D1B9E6116252F65007672AD /* indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = indicator.png; sourceTree = "<group>"; };
 		0D1B9E6216252F65007672AD /* indicator-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "indicator-active@2x.png"; sourceTree = "<group>"; };
@@ -104,7 +102,6 @@
 				0D1B9E59162522FC007672AD /* MainStoryboard.storyboard */,
 				0D1B9E5B16252308007672AD /* RGMViewController.h */,
 				0D1B9E5C16252308007672AD /* RGMViewController.m */,
-				0D1B9E5E1625294C007672AD /* RGMView.xib */,
 				0D1B9E3C16252156007672AD /* Supporting Files */,
 			);
 			path = RGMPagingScrollViewExample;
@@ -129,8 +126,8 @@
 		0D1B9E5216252166007672AD /* RGMPagingScrollView */ = {
 			isa = PBXGroup;
 			children = (
-				0D1B9E5316252166007672AD /* RGMPageIndicator.h */,
-				0D1B9E5416252166007672AD /* RGMPageIndicator.m */,
+				0D1B9E5316252166007672AD /* RGMPageControl.h */,
+				0D11F5341627333800E0E869 /* RGMPageControl.m */,
 				0D1B9E5516252166007672AD /* RGMPagingScrollView.h */,
 				0D1B9E5616252166007672AD /* RGMPagingScrollView.m */,
 			);
@@ -206,7 +203,6 @@
 				0D1B9E4A16252156007672AD /* Default@2x.png in Resources */,
 				0D1B9E4C16252156007672AD /* Default-568h@2x.png in Resources */,
 				0D1B9E5A162522FC007672AD /* MainStoryboard.storyboard in Resources */,
-				0D1B9E5F1625294D007672AD /* RGMView.xib in Resources */,
 				0D1B9E6416252F65007672AD /* indicator-active.png in Resources */,
 				0D1B9E6516252F65007672AD /* indicator.png in Resources */,
 				0D1B9E6616252F65007672AD /* indicator-active@2x.png in Resources */,
@@ -223,9 +219,9 @@
 			files = (
 				0D1B9E4216252156007672AD /* main.m in Sources */,
 				0D1B9E4616252156007672AD /* RGMAppDelegate.m in Sources */,
-				0D1B9E5716252166007672AD /* RGMPageIndicator.m in Sources */,
 				0D1B9E5816252166007672AD /* RGMPagingScrollView.m in Sources */,
 				0D1B9E5D16252308007672AD /* RGMViewController.m in Sources */,
+				0D11F5351627333800E0E869 /* RGMPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

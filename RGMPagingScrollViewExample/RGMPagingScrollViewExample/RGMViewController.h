@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class RGMPagingScrollView;
-@class RGMPageIndicator;
+@class RGMPageControl;
 
 @interface RGMViewController : UIViewController
 
 @property (nonatomic, strong) IBOutlet RGMPagingScrollView *pagingScrollView;
-@property (nonatomic, strong) IBOutlet RGMPageIndicator *pageIndicator;
+@property (nonatomic, strong) IBOutlet RGMPageControl *pageIndicator;
 
 @end
