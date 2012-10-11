@@ -27,7 +27,7 @@
         _numberOfPages = 0;
         _currentPage = 0;
         _activeImage = activeImage;
-        _itemSpacing = 5.0f;
+        _itemSpacing = 10.0f;
         _orientation = RGMPageIndicatorHorizontal;
         
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];

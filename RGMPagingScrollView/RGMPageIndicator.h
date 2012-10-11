@@ -24,7 +24,7 @@ typedef enum {
 
 - (id)initWithItemImage:(UIImage *)image activeImage:(UIImage *)activeImage;
 
-@property (assign, nonatomic) CGFloat itemSpacing; // default is 5.0f
+@property (assign, nonatomic) CGFloat itemSpacing; // default is 10.0f
 @property (assign, nonatomic) RGMPageIndicatorOrientation orientation;  // default is horizontal
 
 @end
