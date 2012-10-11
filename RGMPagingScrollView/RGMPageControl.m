@@ -50,11 +50,15 @@
     }
     
     CGRect frame = activeIndicator.frame;
-    if (point.x < CGRectGetMinX(frame)) {
+    RGMPageIndicatorOrientation orientation = self.orientation;
+    
+    if ((orientation == RGMPageIndicatorHorizontal && point.x < CGRectGetMinX(frame)) ||
+        (orientation == RGMPageIndicatorVertical && point.y < CGRectGetMinY(frame))) {
         self.currentPage--;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
-    else if (point.x > CGRectGetMaxX(frame)) {
+    else if ((orientation == RGMPageIndicatorHorizontal && point.x > CGRectGetMaxX(frame)) ||
+             (orientation == RGMPageIndicatorVertical && point.y > CGRectGetMaxY(frame))) {
         self.currentPage++;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
