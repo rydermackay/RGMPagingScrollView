@@ -1,5 +1,5 @@
 //
-//  RGMPageIndicator.h
+//  RGMPageControl.h
 //  RGMPagingScrollView
 //
 //  Created by Ryder Mackay on 2012-07-06.
@@ -13,7 +13,7 @@ typedef enum {
     RGMPageIndicatorVertical
 } RGMPageIndicatorOrientation;
 
-@interface RGMPageIndicator : UIControl
+@interface RGMPageControl : UIControl
 
 @property(nonatomic) NSInteger numberOfPages;          // default is 0
 @property(nonatomic) NSInteger currentPage;            // default is 0. value pinned to 0..numberOfPages-1

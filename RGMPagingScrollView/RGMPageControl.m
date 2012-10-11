@@ -1,14 +1,14 @@
 //
-//  RGMPageIndicator.m
+//  RGMPageControl.m
 //  RGMPagingScrollView
 //
 //  Created by Ryder Mackay on 2012-07-06.
 //  Copyright (c) 2012 Ryder Mackay. All rights reserved.
 //
 
-#import "RGMPageIndicator.h"
+#import "RGMPageControl.h"
 
-@interface RGMPageIndicator ()
+@interface RGMPageControl ()
 
 @property (copy, nonatomic) NSArray *indicators;
 @property (nonatomic, strong) UIImage *image;
@@ -18,7 +18,7 @@
 
 
 
-@implementation RGMPageIndicator
+@implementation RGMPageControl
 
 - (id)initWithItemImage:(UIImage *)image activeImage:(UIImage *)activeImage
 {
