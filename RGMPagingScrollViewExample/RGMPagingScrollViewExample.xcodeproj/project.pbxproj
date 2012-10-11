@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D11F5351627333800E0E869 /* RGMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D11F5341627333800E0E869 /* RGMPageControl.m */; };
+		0D11F538162739A600E0E869 /* RGMPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D11F537162739A600E0E869 /* RGMPageView.m */; };
 		0D1B9E3616252156007672AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1B9E3516252156007672AD /* UIKit.framework */; };
 		0D1B9E3816252156007672AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1B9E3716252156007672AD /* Foundation.framework */; };
 		0D1B9E3A16252156007672AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1B9E3916252156007672AD /* CoreGraphics.framework */; };
@@ -28,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		0D11F5341627333800E0E869 /* RGMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGMPageControl.m; sourceTree = "<group>"; };
+		0D11F536162739A500E0E869 /* RGMPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGMPageView.h; sourceTree = "<group>"; };
+		0D11F537162739A600E0E869 /* RGMPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGMPageView.m; sourceTree = "<group>"; };
 		0D1B9E3116252156007672AD /* RGMPagingScrollViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RGMPagingScrollViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D1B9E3516252156007672AD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0D1B9E3716252156007672AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -102,6 +105,8 @@
 				0D1B9E59162522FC007672AD /* MainStoryboard.storyboard */,
 				0D1B9E5B16252308007672AD /* RGMViewController.h */,
 				0D1B9E5C16252308007672AD /* RGMViewController.m */,
+				0D11F536162739A500E0E869 /* RGMPageView.h */,
+				0D11F537162739A600E0E869 /* RGMPageView.m */,
 				0D1B9E3C16252156007672AD /* Supporting Files */,
 			);
 			path = RGMPagingScrollViewExample;
@@ -222,6 +227,7 @@
 				0D1B9E5816252166007672AD /* RGMPagingScrollView.m in Sources */,
 				0D1B9E5D16252308007672AD /* RGMViewController.m in Sources */,
 				0D11F5351627333800E0E869 /* RGMPageControl.m in Sources */,
+				0D11F538162739A600E0E869 /* RGMPageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

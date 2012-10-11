@@ -9,6 +9,7 @@
 #import "RGMViewController.h"
 #import "RGMPagingScrollView.h"
 #import "RGMPageControl.h"
+#import "RGMPageView.h"
 
 @interface RGMViewController () <RGMPagingScrollViewDatasource, RGMPagingScrollViewDelegate>
 
@@ -28,7 +29,7 @@
 #pragma mark -
 
 static NSString *reuseIdentifier = @"RGMPageReuseIdentifier";
-static NSUInteger numberOfPages = 3;
+static NSUInteger numberOfPages = 8;
 
 @implementation RGMViewController
 
@@ -38,17 +39,22 @@ static NSUInteger numberOfPages = 3;
 {
     [super viewDidLoad];
     
-    [self.pagingScrollView registerClass:[UIView class] forCellReuseIdentifier:reuseIdentifier];
+    [self.pagingScrollView registerClass:[RGMPageView class] forCellReuseIdentifier:reuseIdentifier];
     
     UIImage *image = [UIImage imageNamed:@"indicator.png"];
     UIImage *imageActive = [UIImage imageNamed:@"indicator-active.png"];
     
     RGMPageControl *indicator = [[RGMPageControl alloc] initWithItemImage:image activeImage:imageActive];
     indicator.numberOfPages = numberOfPages;
+    [indicator addTarget:self action:@selector(pageIndicatorValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:indicator];
     self.pageIndicator = indicator;
     
-    [indicator addTarget:self action:@selector(pageIndicatorValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    
+    // comment out for horizontal scrolling and indicator orientation (defaults)
+    self.pagingScrollView.scrollDirection = RGMScrollDirectionVertical;
+    self.pageIndicator.orientation = RGMPageIndicatorVertical;
 }
 
 - (IBAction)pageIndicatorValueChanged:(RGMPageControl *)sender
@@ -72,9 +78,23 @@ static NSUInteger numberOfPages = 3;
     [self.pageIndicator sizeToFit];
     
     CGRect frame = self.pageIndicator.frame;
-    frame.origin.x = floorf((bounds.size.width - frame.size.width) / 2.0f);
-    frame.origin.y = bounds.size.height - frame.size.height - 20.0f;
-    frame.size.width = MIN(frame.size.width, bounds.size.width);
+    const CGFloat inset = 20.0f;
+    
+    switch (self.pageIndicator.orientation) {
+        case RGMPageIndicatorHorizontal: {
+            frame.origin.x = floorf((bounds.size.width - frame.size.width) / 2.0f);
+            frame.origin.y = bounds.size.height - frame.size.height - inset;
+            frame.size.width = MIN(frame.size.width, bounds.size.width);
+            break;
+        }
+        case RGMPageIndicatorVertical: {
+            frame.origin.x = bounds.origin.x + inset;
+            frame.origin.y = floorf((bounds.size.height - frame.size.height) / 2.0f);
+            frame.size.height = MIN(frame.size.height, bounds.size.height);
+            break;
+        }
+    }
+    
     self.pageIndicator.frame = frame;
 }
 
@@ -87,9 +107,9 @@ static NSUInteger numberOfPages = 3;
 
 - (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSUInteger)idx
 {
-    UIView *view = [pagingScrollView dequeueReusablePageWithIdentifer:reuseIdentifier forIndex:idx];
+    RGMPageView *view = (RGMPageView *)[pagingScrollView dequeueReusablePageWithIdentifer:reuseIdentifier forIndex:idx];
     
-    switch (idx) {
+    switch (idx % 3) {
         case 0:
             view.backgroundColor = [UIColor redColor];
             break;
@@ -102,6 +122,8 @@ static NSUInteger numberOfPages = 3;
         default:
             break;
     }
+    
+    view.label.text = [NSString stringWithFormat:@"%d", idx];
     
     return view;
 }
