@@ -109,18 +109,17 @@ static NSInteger numberOfPages = 8;
 {
     RGMPageView *view = (RGMPageView *)[pagingScrollView dequeueReusablePageWithIdentifer:reuseIdentifier forIndex:idx];
     
-    switch (idx % 3) {
-        case 0:
-            view.backgroundColor = [UIColor redColor];
+    switch (idx % 2) {
+        case 0: {
+            view.backgroundColor = [UIColor blackColor];
+            view.label.textColor = [UIColor whiteColor];
             break;
-        case 1:
-            view.backgroundColor = [UIColor greenColor];
+        }
+        case 1: {
+            view.backgroundColor = [UIColor whiteColor];
+            view.label.textColor = [UIColor blackColor];
             break;
-        case 2:
-            view.backgroundColor = [UIColor blueColor];
-            break;
-        default:
-            break;
+        }
     }
     
     view.label.text = [NSString stringWithFormat:@"%d", idx];
