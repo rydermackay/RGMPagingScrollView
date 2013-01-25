@@ -39,18 +39,9 @@
 
 - (IBAction)tapGestureRecognized:(UITapGestureRecognizer *)sender
 {
-    CGPoint point = [sender locationInView:self];
-    
-    UIImageView *activeIndicator;
-    for (UIImageView *imageView in self.indicators) {
-        if (imageView.highlighted) {
-            activeIndicator = imageView;
-            break;
-        }
-    }
-    
-    CGRect frame = activeIndicator.frame;
-    RGMPageIndicatorOrientation orientation = self.orientation;
+    const CGPoint point = [sender locationInView:self];
+    const CGRect frame = [self frameForIndex:self.currentPage];
+    const RGMPageIndicatorOrientation orientation = self.orientation;
     
     if ((orientation == RGMPageIndicatorHorizontal && point.x < CGRectGetMinX(frame)) ||
         (orientation == RGMPageIndicatorVertical && point.y < CGRectGetMinY(frame))) {
@@ -83,6 +74,7 @@
     
     _numberOfPages = numberOfPages;
     
+    [self reload];
     [self setNeedsLayout];
 }
 
@@ -126,11 +118,8 @@
     return [self sizeForNumberOfPages:self.numberOfPages];
 }
 
-- (void)layoutSubviews
+- (void)reload
 {
-    [super layoutSubviews];
-    
-    // remove all pages
     for (UIImageView *imageView in self.indicators) {
         [imageView removeFromSuperview];
     }
@@ -139,41 +128,48 @@
         return;
     }
     
-    // reset bounds
-    CGRect bounds = self.bounds;
-    bounds.size = [self sizeForNumberOfPages:self.numberOfPages];
-    self.bounds = bounds;
-    
     UIImage *image = self.image;
     UIImage *activeImage = self.activeImage;
     
     NSMutableArray *indicators = [NSMutableArray array];
     
-    CGFloat offset = 0.0f;
-    CGFloat spacing = self.itemSpacing;
-    
     for (int i = 0; i < self.numberOfPages; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image highlightedImage:activeImage];
         imageView.highlighted = (i == self.currentPage);
-        
-        CGRect frame = imageView.frame;
-        
-        if (self.orientation == RGMPageIndicatorVertical) {
-            frame.origin.y += offset;
-            offset += frame.size.height + spacing;
-        }
-        else {
-            frame.origin.x += offset;
-            offset += frame.size.width + spacing;
-        }
-        
-        imageView.frame = frame;
         
         [self addSubview:imageView];
         [indicators addObject:imageView];
     }
     
     self.indicators = indicators;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [self.indicators enumerateObjectsUsingBlock:^(UIImageView *imageView, NSUInteger idx, BOOL *stop) {
+        imageView.frame = [self frameForIndex:idx];
+    }];
+}
+
+- (CGRect)frameForIndex:(NSInteger)idx
+{
+    const CGRect bounds = [self bounds];
+    const CGSize size = self.image.size;
+    const CGFloat spacing = self.itemSpacing;
+    
+    if (self.orientation == RGMPageIndicatorVertical) {
+        return CGRectMake(floorf((CGRectGetWidth(bounds) - size.width) * 0.5f),
+                          (size.height + spacing) * idx,
+                          size.width,
+                          size.height);
+    } else {
+        return CGRectMake((size.width + spacing) * idx,
+                          floorf((CGRectGetHeight(bounds) - size.height) * 0.5f),
+                          size.width,
+                          size.height);
+    }
 }
 
 @end
