@@ -53,7 +53,10 @@ static NSInteger numberOfPages = 8;
     
     
     // comment out for horizontal scrolling and indicator orientation (defaults)
-    self.pagingScrollView.scrollDirection = RGMScrollDirectionVertical;
+    self.pagingScrollView.scrollDirection = RGMScrollDirectionHorizontal;
+    
+    self.pagingScrollView.gutter = 30.0f;
+    
     self.pageIndicator.orientation = RGMPageIndicatorVertical;
 }
 
@@ -111,13 +114,13 @@ static NSInteger numberOfPages = 8;
     
     switch (idx % 2) {
         case 0: {
-            view.backgroundColor = [UIColor blackColor];
+            view.backgroundColor = [UIColor grayColor];
             view.label.textColor = [UIColor whiteColor];
             break;
         }
         case 1: {
             view.backgroundColor = [UIColor whiteColor];
-            view.label.textColor = [UIColor blackColor];
+            view.label.textColor = [UIColor grayColor];
             break;
         }
     }
