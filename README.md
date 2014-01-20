@@ -10,7 +10,7 @@ See the example Xcode project in */RGMPagingScrollViewExample*.
 
 Instantiate `RGMPagingScrollView` in code or as part of a nib or storyboard. Set the `datasource` and `delegate` properties and adopt the corresponding protocols. Reusable views can be registered in advance using the `-registerClass:forReuseIdentifier:` or `-registerNib:forReuseIdentifier:` methods.
 
-	_pagingScrollView = [[RMGPagingScrollView alloc] initWithFrame:self.view.bounds]
+	_pagingScrollView = [[RGMPagingScrollView alloc] initWithFrame:self.view.bounds]
 	_pagingScrollView.datasource = self;
 	_pagingScrollView.delegate = self;
 	[_pagingScrollView registerClass:[XYZPageView class] forReuseIdentifier:@"identifier"];
