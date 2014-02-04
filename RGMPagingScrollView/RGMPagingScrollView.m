@@ -248,7 +248,7 @@ static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
         
         _viewModel.pageWidth = self.bounds.size.width;
         _viewModel.pageHeight = self.bounds.size.height;
-        _viewModel.gutter = 0.0f;
+        _viewModel.gutter = FEED_CELL_SIDE_PADDING / 2;
         
         self.contentSize = [_viewModel contentSizeForDirection:self.scrollDirection];
         
