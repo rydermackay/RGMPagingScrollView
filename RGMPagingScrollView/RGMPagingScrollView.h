@@ -27,6 +27,8 @@ typedef enum {
 #pragma mark - RGMPagingScrollViewDatasource
 
 @protocol RGMPagingScrollViewDatasource <NSObject>
+@optional
+- (CGFloat)pagingScrollViewPageGutter;
 @required
 - (NSInteger)pagingScrollViewNumberOfPages:(RGMPagingScrollView *)pagingScrollView;
 - (UIView *)pagingScrollView:(RGMPagingScrollView *)pagingScrollView viewForIndex:(NSInteger)idx;
@@ -49,7 +51,7 @@ typedef enum {
 - (UIView *)dequeueReusablePageWithIdentifer:(NSString *)identifier forIndex:(NSInteger)idx;
 - (void)registerClass:(Class)pageClass forCellReuseIdentifier:(NSString *)identifier;
 - (void)registerNib:(UINib *)nib forCellReuseIdentifier:(NSString *)identifier;
-
+- (UIView*)currentView;
 - (void)reloadData;
 
 @end

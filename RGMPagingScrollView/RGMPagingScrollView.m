@@ -248,7 +248,10 @@ static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
         
         _viewModel.pageWidth = self.bounds.size.width;
         _viewModel.pageHeight = self.bounds.size.height;
-        _viewModel.gutter = FEED_CELL_SIDE_PADDING / 2;
+        _viewModel.gutter = 0.0f;
+        if ([self.datasource respondsToSelector:@selector(pagingScrollViewPageGutter)]) {
+            _viewModel.gutter = [self.datasource pagingScrollViewPageGutter];
+        }
         
         self.contentSize = [_viewModel contentSizeForDirection:self.scrollDirection];
         
@@ -476,6 +479,18 @@ static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
     currentPage = MIN((self.viewModel.numberOfPages - 1), currentPage);
     
     return currentPage;
+}
+
+- (UIView*)currentView {
+    UIView *currentView = nil;
+    NSInteger currentPage = [self currentPage];
+    for (UIView *page in _visiblePages) {
+        if (page.tag == currentPage) {
+            currentView = page;
+            break;
+        }
+    }
+    return currentView;
 }
 
 - (void)setCurrentPage:(NSInteger)currentPage
