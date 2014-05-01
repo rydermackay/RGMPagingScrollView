@@ -421,7 +421,7 @@ static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
     NSInteger lastNeededIndex = floorf(max / pageLength);
     
     firstNeededIndex = MAX(firstNeededIndex, 0);
-    lastNeededIndex = MIN(numberOfPages - 1, lastNeededIndex);
+    lastNeededIndex = MIN(lastNeededIndex, numberOfPages - 1);
     
     
     
