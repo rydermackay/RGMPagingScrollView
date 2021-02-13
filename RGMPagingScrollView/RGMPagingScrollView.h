@@ -44,6 +44,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet id <RGMPagingScrollViewDatasource> datasource;
 
 @property (nonatomic) NSInteger currentPage;
+@property (nonatomic) CGFloat gutter;
+
 - (void)setCurrentPage:(NSInteger)currentPage animated:(BOOL)animated;
 
 - (UIView *)dequeueReusablePageWithIdentifer:(NSString *)identifier forIndex:(NSInteger)idx;

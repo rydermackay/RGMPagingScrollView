@@ -189,6 +189,7 @@ static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
     self.showsVerticalScrollIndicator = NO;
     
     _scrollDirection = RGMScrollDirectionHorizontal;
+    _gutter = 0.0f;
     _visiblePages = [NSMutableSet set];
     _reusablePages = [NSMutableDictionary dictionary];
     _registeredClasses = [NSMutableDictionary dictionary];
@@ -235,6 +236,22 @@ static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
     [_visiblePages removeAllObjects];
     [_reusablePages removeAllObjects];
     
+    // before viewModel will be niled, set frame in a consistent state without gutter
+    CGRect frame = self.frame;
+    switch (self.scrollDirection) {
+        case RGMScrollDirectionHorizontal: {
+            frame.size.width -= _viewModel.gutter;
+            frame.origin.x += _viewModel.gutter / 2;
+            break;
+        }
+        case RGMScrollDirectionVertical: {
+            frame.size.height -= _viewModel.gutter;
+            frame.origin.y += _viewModel.gutter / 2;
+            break;
+        }
+    }
+    self.frame = frame;
+    
     self.viewModel = nil;
     
     [self setNeedsLayout];
@@ -248,7 +265,7 @@ static NSString *RGMPageReuseIdentifierKey = @"pageReuseIdentifier";
         
         _viewModel.pageWidth = self.bounds.size.width;
         _viewModel.pageHeight = self.bounds.size.height;
-        _viewModel.gutter = 0.0f;
+        _viewModel.gutter = self.gutter;
         
         self.contentSize = [_viewModel contentSizeForDirection:self.scrollDirection];
         
